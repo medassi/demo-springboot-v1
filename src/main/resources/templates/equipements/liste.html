@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Parc Informatique</title>
+    <!-- Bootstrap 5 CDN -->
+    <!-- <link rel="stylesheet" th:href="@{/css/style.css}"> --> 
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body class="bg-light p-4">
+
+    <div class="container bg-white p-4 rounded shadow-sm">
+        <h2 class="text-primary mb-4">🖥️ Parc Informatique</h2>
+
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>N° Série</th>
+                    <th>Prix</th>
+                    <th>Service</th>
+                    <th>Caractéristiques</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="equipement : ${equipements}">
+                    <td th:text="${equipement.id}"/>
+                    <td class="fw-bold" th:text="${equipement.nom}"/>
+                    <td th:text="${equipement.numeroSerie}"/>
+                    <td th:text="${equipement.prix != null ? equipement.prix + ' €' : '-'}"/>
+                    <td>
+                        <span class="badge bg-secondary" 
+                              th:text="${equipement.service != null ? equipement.service.nom : 'Non affecté'}"/>
+                    </td>
+                    <td>
+                        <span class="badge bg-info text-dark" th:if="${equipement instanceof T(fr.medassi.democours.models.Ordinateur)}">
+                            💻 PC [<span th:text="${equipement.typePc}"/>] 
+                            <span th:text="${equipement.ramGo}"/>Go RAM / 
+                            <span th:text="${equipement.processeur}"/>
+                        </span>
+                        <span class="badge bg-warning text-dark" th:if="${equipement instanceof T(fr.medassi.democours.models.Imprimante)}">
+                            🖨️ Imprimante — Couleur : <span th:text="${equipement.estCouleur ? 'Oui' : 'Non'}"/>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
